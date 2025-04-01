@@ -1,0 +1,58 @@
+whiteboard/
+├── config/
+│   ├── database.php
+│   └── config.php
+├── public/
+│   ├── index.php
+│   ├── assets/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   └── .htaccess
+├── app/
+│   ├── controllers/
+│   │   ├── AuthController.php
+│   │   ├── BoardController.php
+│   │   ├── ObjectController.php
+│   │   └── UserController.php
+│   ├── models/
+│   │   ├── User.php
+│   │   ├── Board.php
+│   │   ├── Object.php
+│   │   ├── Comment.php
+│   │   └── History.php
+│   ├── services/
+│   │   ├── AuthService.php
+│   │   ├── BoardService.php
+│   │   └── ObjectService.php
+│   └── utils/
+│       ├── Response.php
+│       └── Validator.php
+├── resources/
+│   └── views/
+│       ├── auth/
+│       │   ├── login.php
+│       │   └── register.php
+│       ├── boards/
+│       │   ├── index.php
+│       │   ├── show.php
+│       │   └── create.php
+│       ├── components/
+│       │   ├── header.php
+│       │   ├── footer.php
+│       │   └── sidebar.php
+│       └── layouts/
+│           └── main.php
+├── routes/
+│   ├── api.php
+│   └── web.php
+├── websocket/
+│   ├── server.php
+│   └── handlers/
+│       ├── BoardHandler.php
+│       └── ConnectionHandler.php
+├── vendor/
+├── .env
+├── .gitignore
+├── composer.json
+└── README.md
