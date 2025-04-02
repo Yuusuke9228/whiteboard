@@ -32,7 +32,7 @@ class WebSocketServer implements MessageComponentInterface
     {
         $this->clients->attach($conn);
 
-        echo "New connection! ({$conn->resourceId})\n";
+        echo "新しい接続! (接続ID: {$conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -40,7 +40,7 @@ class WebSocketServer implements MessageComponentInterface
         $data = json_decode($msg, true);
 
         if (!isset($data['type'])) {
-            echo "Message without type: {$msg}\n";
+            echo "タイプのないメッセージ: {$msg}\n";
             return;
         }
 
@@ -70,7 +70,7 @@ class WebSocketServer implements MessageComponentInterface
                 break;
 
             default:
-                echo "Unknown message type: {$data['type']}\n";
+                echo "不明なメッセージタイプ: {$data['type']}\n";
                 break;
         }
     }
@@ -80,12 +80,12 @@ class WebSocketServer implements MessageComponentInterface
         $this->connectionHandler->handleDisconnect($conn);
         $this->clients->detach($conn);
 
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        echo "接続 {$conn->resourceId} が切断されました\n";
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo "An error has occurred: {$e->getMessage()}\n";
+        echo "エラーが発生しました: {$e->getMessage()}\n";
 
         $conn->close();
     }
@@ -132,6 +132,15 @@ class WebSocketServer implements MessageComponentInterface
     }
 }
 
+// 環境変数読み込み
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+// 設定を取得
+$config = require __DIR__ . '/../config/config.php';
+$host = $config['websocket']['host'] ?? '0.0.0.0';
+$port = $config['websocket']['port'] ?? 8080;
+
 // WebSocketサーバーの起動
 $server = IoServer::factory(
     new HttpServer(
@@ -139,9 +148,10 @@ $server = IoServer::factory(
             new WebSocketServer()
         )
     ),
-    8080
+    $port,
+    $host
 );
 
-echo "WebSocket Server started on port 8080\n";
+echo "WebSocketサーバーがポート {$port} で起動しました\n";
 
 $server->run();

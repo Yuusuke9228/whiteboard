@@ -1,6 +1,7 @@
 // public/index.php
 <?php
-session_start();
+// bootstrap.phpを読み込み、環境変数とオートローダーを初期化
+require_once __DIR__ . '/../bootstrap.php';
 
 // オートローダーの簡易実装（実際の開発ではComposerを使用）
 spl_autoload_register(function ($className) {
@@ -9,6 +10,7 @@ spl_autoload_register(function ($className) {
         require_once $file;
     }
 });
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -58,16 +60,14 @@ if ($isApiRequest) {
 }
 
 // ルーティング処理
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$method = $_SERVER['REQUEST_METHOD'];
-
-if ($method === 'POST' && isset($_POST['_method'])) {
-    $method = strtoupper($_POST['_method']);
-}
-
 require_once __DIR__ . '/../routes/web.php';
 
 $routeFound = false;
+
+// PUT/DELETE メソッドの処理
+if ($method === 'POST' && isset($_POST['_method'])) {
+    $method = strtoupper($_POST['_method']);
+}
 
 if (isset($routes[$method])) {
     foreach ($routes[$method] as $route => $callback) {

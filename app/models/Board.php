@@ -15,7 +15,7 @@ class Board extends Model
 
     public function objects()
     {
-        $objectModel = new Object();
+        $objectModel = new BoardObject();
         return $objectModel->where('board_id', $this->id);
     }
 

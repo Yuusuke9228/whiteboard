@@ -1,7 +1,7 @@
 <?php
 // app/controllers/api/ObjectController.php
 require_once __DIR__ . '/ApiController.php';
-require_once __DIR__ . '/../../models/Object.php';
+require_once __DIR__ . '/../../models/BoardObject.php';
 
 class ObjectApiController extends ApiController
 {
@@ -9,9 +9,15 @@ class ObjectApiController extends ApiController
 
     public function __construct()
     {
-        $this->objectModel = new Object();
+        $this->objectModel = new BoardObject();
     }
 
+    /**
+     * オブジェクトの一覧を取得
+     *
+     * @param int $boardId ボードID
+     * @return void
+     */
     public function index($boardId)
     {
         $userId = $this->authorize($boardId);
@@ -23,6 +29,13 @@ class ObjectApiController extends ApiController
         ]);
     }
 
+    /**
+     * 特定のオブジェクトを取得
+     *
+     * @param int $boardId ボードID
+     * @param int $objectId オブジェクトID
+     * @return void
+     */
     public function show($boardId, $objectId)
     {
         $userId = $this->authorize($boardId);
@@ -38,6 +51,12 @@ class ObjectApiController extends ApiController
         ]);
     }
 
+    /**
+     * 新しいオブジェクトを作成
+     *
+     * @param int $boardId ボードID
+     * @return void
+     */
     public function store($boardId)
     {
         $userId = $this->authorize($boardId, 'edit');
@@ -85,6 +104,13 @@ class ObjectApiController extends ApiController
         ], 'Object created successfully');
     }
 
+    /**
+     * オブジェクトを更新
+     *
+     * @param int $boardId ボードID
+     * @param int $objectId オブジェクトID
+     * @return void
+     */
     public function update($boardId, $objectId)
     {
         $userId = $this->authorize($boardId, 'edit');
@@ -141,6 +167,13 @@ class ObjectApiController extends ApiController
         ], 'Object updated successfully');
     }
 
+    /**
+     * オブジェクトを削除
+     *
+     * @param int $boardId ボードID
+     * @param int $objectId オブジェクトID
+     * @return void
+     */
     public function destroy($boardId, $objectId)
     {
         $userId = $this->authorize($boardId, 'edit');
@@ -168,7 +201,12 @@ class ObjectApiController extends ApiController
         return $this->success([], 'Object deleted successfully');
     }
 
-    // WebSocketにメッセージを送信
+    /**
+     * WebSocketにメッセージを送信
+     *
+     * @param array $message メッセージデータ
+     * @return void
+     */
     protected function sendWebSocketMessage($message)
     {
         // WebSocketサーバーへの接続

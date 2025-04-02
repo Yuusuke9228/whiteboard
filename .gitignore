@@ -1,0 +1,5 @@
+._*
+.env
+composer.lock
+config/config.php
+/vendor/

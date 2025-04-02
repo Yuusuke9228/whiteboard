@@ -1,0 +1,21 @@
+{
+    "name": "yuusuke9228/whiteboard",
+    "description": "A simple collaborative whiteboard application",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "cboden/ratchet": "^0.4.4",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yuusuke9228"
+        }
+    ],
+    "minimum-stability": "stable"
+}
